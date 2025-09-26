@@ -19,7 +19,7 @@
 
 
 import logging
-from telegram import Update
+from telegram import Update, ParseMode
 from telegram.ext import CallbackContext
 
 from internationalization import _, __
@@ -92,7 +92,8 @@ def send_async(bot, *args, **kwargs):
     """Send a message asynchronously"""
     if 'timeout' not in kwargs:
         kwargs['timeout'] = TIMEOUT
-
+    if 'parse_mode' not in kwargs:
+        kwargs['parse_mode'] = ParseMode.MARKDOWN_V2
     try:
         dispatcher.run_async(bot.sendMessage, *args, **kwargs)
     except Exception as e:
@@ -111,7 +112,7 @@ def answer_async(bot, *args, **kwargs):
 
 
 def game_is_running(game):
-    return game in gm.chatid_games.get(game.chat.id, list())
+    return game in gm.chatid_games.get(game.chat.id, [])
 
 
 def user_is_creator(user, game):

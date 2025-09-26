@@ -378,8 +378,7 @@ def start_game(update: Update, context: CallbackContext):
             choice = [[InlineKeyboardButton(text=_("Make your choice!"), switch_inline_query_current_chat='')]]
             first_message = (
                 __("First player: {name}\n"
-                   "Use /close to stop people from joining the game.\n"
-                   "Enable multi-translations with /enable_translations",
+                   "Use /close to stop people from joining the game.",
                    multi=game.translate)
                 .format(name=mention_user(game.current_player.user)))
 
@@ -401,7 +400,7 @@ def start_game(update: Update, context: CallbackContext):
     elif len(context.args) and context.args[0] == 'select':
         players = gm.userid_players[update.message.from_user.id]
 
-        groups = list()
+        groups = []
         for player in players:
             title = player.game.chat.title
 
@@ -574,7 +573,7 @@ def reply_to_query(update: Update, context: CallbackContext):
     Handler for inline queries.
     Builds the result list for inline queries and answers to the client.
     """
-    results = list()
+    results = []
     switch = None
 
     try:
@@ -614,7 +613,7 @@ def reply_to_query(update: Update, context: CallbackContext):
                     add_call_bluff(results, game)
 
                 playable = player.playable_cards()
-                added_ids = list()  # Duplicates are not allowed
+                added_ids = []  # Duplicates are not allowed
 
                 for card in sorted(player.cards):
                     add_card(game, card, results,

@@ -86,7 +86,7 @@ _ = _Underscore()
 
 def __(singular, plural=None, n=1, multi=False):
     """Translates text into all locales on the stack"""
-    translations = list()
+    translations = []
 
     if not multi and len(set(_.locale_stack)) >= 1:
         translations.append(_(singular, plural, n, 'en_US'))
@@ -127,7 +127,7 @@ def game_locales(func):
     def wrapped(update, context, *pargs, **kwargs):
         user, chat = _user_chat_from_update(update)
         player = gm.player_for_user_in_chat(user, chat)
-        locales = list()
+        locales = []
 
         if player:
             for player in player.game.players:

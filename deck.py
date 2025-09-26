@@ -30,8 +30,8 @@ class Deck(object):
     """ This class represents a deck of cards """
 
     def __init__(self):
-        self.cards = list()
-        self.graveyard = list()
+        self.cards = []
+        self.graveyard = []
         self.logger = logging.getLogger(__name__)
 
         self.logger.debug(self.cards)
