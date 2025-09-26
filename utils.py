@@ -53,7 +53,7 @@ def mention_user(user):
     user_name = user.first_name
     if user.last_name:
         user_name += f" {user.last_name}"
-    return f'<a href="tg://user?id={user.id}">{user_name}</a>'
+    return user.mention_html(user_name)
 
 def display_color(color):
     """ Convert a color code to actual color name """
