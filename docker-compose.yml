@@ -1,7 +1,16 @@
 services:
-  maumaubot:
-    # build: .
-    image: ghcr.io/jh0ker/mau_mau_bot
+  unonextbot:
+    build:
+      context: .
+    image: unonextbot:latest
+    container_name: unonextbot
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
     volumes:
-      - ./data:/app/data
+      - ./:/app
+    network_mode: bridge
