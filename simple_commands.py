@@ -35,8 +35,8 @@ def help_handler(update: Update, context: CallbackContext):
       " running game with /join\n"
       "3. After at least two players have joined, start the game with"
       " /start\n"
-      "4. Type <code>@unobot</code> into your chat box and hit "
-      "<b>space</b>, or click the <code>via @unobot</code> text "
+      "4. Type <code>@unonextbot</code> into your chat box and hit "
+      "<b>space</b>, or click the <code>via @unonextbot</code> text "
       "next to messages. You will see your cards (some greyed out), "
       "any extra options like drawing, and a <b>?</b> to see the "
       "current game state. The <b>greyed out cards</b> are those you "
@@ -48,9 +48,9 @@ def help_handler(update: Update, context: CallbackContext):
       "receive a private message when a new game is started.\n\n"
       "<b>Language</b> and other settings: /settings\n"
       "Other commands (only game creator):\n"
-      "/close - Close lobby\n"
-      "/open - Open lobby\n"
-      "/kill - Terminate the game\n"
+      "/close - Close a lobby\n"
+      "/open - Open a lobby\n"
+      "/kill - End the UNO\n"
       "/kick - Select a player to kick "
       "by replying to him or her")
 
