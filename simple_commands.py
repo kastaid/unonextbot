@@ -71,7 +71,7 @@ def help_handler(update: Update, context: CallbackContext):
           parse_mode=ParseMode.HTML,
           disable_web_page_preview=True,
       )
-      send_promotion(update.effective_chat)
+      # send_promotion(update.effective_chat)
 
     context.dispatcher.run_async(_send)
 
