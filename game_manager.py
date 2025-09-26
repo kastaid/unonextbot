@@ -143,7 +143,7 @@ class GameManager(object):
         """
 
         self.logger.info("Game in chat " + str(chat.id) + " ended")
-        send_promotion_async(chat, chance=0.15)
+        # send_promotion_async(chat, chance=0.15)
 
         # Find the correct game instance to end
         player = self.player_for_user_in_chat(user, chat)
