@@ -51,7 +51,7 @@ class Game(object):
     @property
     def players(self):
         """Returns a list of all players in this game"""
-        players = list()
+        players = []
         if not self.current_player:
             return players
 

@@ -47,7 +47,7 @@ class GameManager(object):
         game = Game(chat)
 
         if chat_id not in self.chatid_games:
-            self.chatid_games[chat_id] = list()
+            self.chatid_games[chat_id] = []
 
         # remove old games
         for g in list(self.chatid_games[chat_id]):
@@ -70,7 +70,7 @@ class GameManager(object):
             raise LobbyClosedError()
 
         if user.id not in self.userid_players:
-            self.userid_players[user.id] = list()
+            self.userid_players[user.id] = []
 
         players = self.userid_players[user.id]
 
@@ -88,7 +88,7 @@ class GameManager(object):
             self.end_game(chat, user)
 
             if user.id not in self.userid_players:
-                self.userid_players[user.id] = list()
+                self.userid_players[user.id] = []
 
             players = self.userid_players[user.id]
 
@@ -103,10 +103,10 @@ class GameManager(object):
         """ Remove a player from its current game """
 
         player = self.player_for_user_in_chat(user, chat)
-        players = self.userid_players.get(user.id, list())
+        players = self.userid_players.get(user.id, [])
 
         if not player:
-            games = self.chatid_games[chat.id]
+            games = self.chatid_games.get(chat.id, [])
             for g in games:
                 for p in g.players:
                     if p.user.id == user.id:
@@ -156,7 +156,7 @@ class GameManager(object):
         # Clear game
         for player_in_game in game.players:
             this_users_players = \
-                self.userid_players.get(player_in_game.user.id, list())
+                self.userid_players.get(player_in_game.user.id, [])
 
             try:
                 this_users_players.remove(player_in_game)
@@ -184,7 +184,7 @@ class GameManager(object):
             del self.chatid_games[chat.id]
 
     def player_for_user_in_chat(self, user, chat):
-        players = self.userid_players.get(user.id, list())
+        players = self.userid_players.get(user.id, [])
         for player in players:
             if player.game.chat.id == chat.id:
                 return player
