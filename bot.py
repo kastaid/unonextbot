@@ -40,7 +40,7 @@ from results import (add_call_bluff, add_choose_color, add_draw, add_gameinfo,
 from shared_vars import gm, updater, dispatcher
 from simple_commands import help_handler
 from start_bot import start_bot
-from utils import display_name
+from utils import mention_user
 from utils import send_async, answer_async, error, TIMEOUT, user_is_creator_or_admin, user_is_creator, game_is_running
 
 
@@ -204,13 +204,13 @@ def leave_game(update: Update, context: CallbackContext):
             send_async(context.bot, chat.id,
                        text=__("Okay. Next Player: {name}",
                                multi=game.translate).format(
-                           name=display_name(game.current_player.user)),
+                           name=mention_user(game.current_player.user)),
                        reply_to_message_id=update.message.message_id)
         else:
             send_async(context.bot, chat.id,
                        text=__("{name} left the game before it started.",
                                multi=game.translate).format(
-                           name=display_name(user)),
+                           name=mention_user(user)),
                        reply_to_message_id=update.message.message_id)
 
 
@@ -251,19 +251,19 @@ def kick_player(update: Update, context: CallbackContext):
                 gm.leave_game(kicked, chat)
 
             except NoGameInChatError:
-                send_async(context.bot, chat.id, text=_("Player {name} is not found in the current game.".format(name=display_name(kicked))),
+                send_async(context.bot, chat.id, text=_("Player {name} is not found in the current game.".format(name=mention_user(kicked))),
                                 reply_to_message_id=update.message.message_id)
                 return
 
             except NotEnoughPlayersError:
                 gm.end_game(chat, user)
                 send_async(context.bot, chat.id,
-                                text=_("{0} was kicked by {1}".format(display_name(kicked), display_name(user))))
+                                text=_("{0} was kicked by {1}".format(mention_user(kicked), mention_user(user))))
                 send_async(context.bot, chat.id, text=__("Game ended!", multi=game.translate))
                 return
 
             send_async(context.bot, chat.id,
-                            text=_("{0} was kicked by {1}".format(display_name(kicked), display_name(user))))
+                            text=_("{0} was kicked by {1}".format(mention_user(kicked), mention_user(user))))
 
         else:
             send_async(context.bot, chat.id,
@@ -274,7 +274,7 @@ def kick_player(update: Update, context: CallbackContext):
         send_async(context.bot, chat.id,
                    text=__("Okay. Next Player: {name}",
                            multi=game.translate).format(
-                       name=display_name(game.current_player.user)),
+                       name=mention_user(game.current_player.user)),
                    reply_to_message_id=update.message.message_id)
 
     else:
@@ -342,7 +342,7 @@ def status_update(update: Update, context: CallbackContext):
         else:
             send_async(context.bot, chat.id, text=__("Removing {name} from the game",
                                              multi=game.translate)
-                       .format(name=display_name(user)))
+                       .format(name=mention_user(user)))
 
 
 @game_locales
@@ -381,7 +381,7 @@ def start_game(update: Update, context: CallbackContext):
                    "Use /close to stop people from joining the game.\n"
                    "Enable multi-translations with /enable_translations",
                    multi=game.translate)
-                .format(name=display_name(game.current_player.user)))
+                .format(name=mention_user(game.current_player.user)))
 
             def send_first():
                 """Send the first card and player"""
@@ -677,7 +677,7 @@ def process_result(update: Update, context: CallbackContext):
     elif int(anti_cheat) != last_anti_cheat:
         send_async(context.bot, chat.id,
                    text=__("Cheat attempt by {name}", multi=game.translate)
-                   .format(name=display_name(player.user)))
+                   .format(name=mention_user(player.user)))
         return
     elif result_id == 'call_bluff':
         reset_waiting_time(context.bot, player)
@@ -696,7 +696,7 @@ def process_result(update: Update, context: CallbackContext):
     if game_is_running(game):
         nextplayer_message = (
             __("Next player: {name}", multi=game.translate)
-            .format(name=display_name(game.current_player.user)))
+            .format(name=mention_user(game.current_player.user)))
         choice = [[InlineKeyboardButton(text=_("Make your choice!"), switch_inline_query_current_chat='')]]
         send_async(context.bot, chat.id,
                         text=nextplayer_message,
@@ -713,7 +713,7 @@ def reset_waiting_time(bot, player):
         send_async(bot, chat.id,
                    text=__("Waiting time for {name} has been reset to {time} "
                            "seconds", multi=player.game.translate)
-                   .format(name=display_name(player.user), time=WAITING_TIME))
+                   .format(name=mention_user(player.user), time=WAITING_TIME))
 
 
 # Add all handlers to the dispatcher and run the bot
@@ -728,10 +728,11 @@ dispatcher.add_handler(CommandHandler('leave', leave_game))
 dispatcher.add_handler(CommandHandler('kick', kick_player))
 dispatcher.add_handler(CommandHandler('open', open_game))
 dispatcher.add_handler(CommandHandler('close', close_game))
-dispatcher.add_handler(CommandHandler('enable_translations',
-                                      enable_translations))
-dispatcher.add_handler(CommandHandler('disable_translations',
-                                      disable_translations))
+
+# dispatcher.add_handler(CommandHandler('enable_translations', enable_translations))
+
+# dispatcher.add_handler(CommandHandler('disable_translations', disable_translations))
+
 dispatcher.add_handler(CommandHandler('skip', skip_player))
 dispatcher.add_handler(CommandHandler('notify_me', notify_me))
 simple_commands.register()
