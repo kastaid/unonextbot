@@ -52,18 +52,7 @@ def help_handler(update: Update, context: CallbackContext):
       "/open - Open lobby\n"
       "/kill - Terminate the game\n"
       "/kick - Select a player to kick "
-      "by replying to him or her\n"
-      "/enable_translations - Translate relevant texts into all "
-      "languages spoken in a game\n"
-      "/disable_translations - Use English for those texts\n\n"
-      "<b>Experimental:</b> Play in multiple groups at the same time. "
-      "Press the <code>Current game: ...</code> button and select the "
-      "group you want to play a card in.\n"
-      "If you enjoy this bot, "
-      "<a href=\"https://telegram.me/storebot?start=mau_mau_bot\">"
-      "rate me</a>, join the "
-      "<a href=\"https://telegram.me/unobotnews\">update channel</a>"
-      " and buy an UNO card game.")
+      "by replying to him or her")
 
     def _send():
       update.message.chat.send_message(
@@ -154,7 +143,7 @@ def stats(update: Update, context: CallbackContext):
 
 def register():
     dispatcher.add_handler(CommandHandler('help', help_handler))
-    dispatcher.add_handler(CommandHandler('source', source))
-    dispatcher.add_handler(CommandHandler('news', news))
+    # dispatcher.add_handler(CommandHandler('source', source))
+    # dispatcher.add_handler(CommandHandler('news', news))
     dispatcher.add_handler(CommandHandler('stats', stats))
     dispatcher.add_handler(CommandHandler('modes', modes))
