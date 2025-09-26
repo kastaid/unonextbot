@@ -392,6 +392,7 @@ def start_game(update: Update, context: CallbackContext):
                 context.bot.sendMessage(chat.id,
                                 text=first_message,
                                 reply_markup=InlineKeyboardMarkup(choice),
+                                parse_mode=ParseMode.HTML,
                                 timeout=TIMEOUT)
 
             dispatcher.run_async(send_first)
