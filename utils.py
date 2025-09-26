@@ -44,10 +44,16 @@ def list_subtract(list1, list2):
 def display_name(user):
     """ Get the current players name including their username, if possible """
     user_name = user.first_name
-    if user.username:
-        user_name += ' (@' + user.username + ')'
+    if user.last_name:
+        user_name += f" {user.last_name}"
     return user_name
 
+def mention_user(user):
+    """ Mention the current players """
+    user_name = user.first_name
+    if user.last_name:
+        user_name += f" {user.last_name}"
+    return f"[{user_name}](tg://user?id={user.id})"
 
 def display_color(color):
     """ Convert a color code to actual color name """

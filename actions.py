@@ -14,7 +14,7 @@ from errors import DeckEmptyError, NotEnoughPlayersError
 from internationalization import __, _
 from shared_vars import gm
 from user_setting import UserSetting
-from utils import send_async, display_name, game_is_running
+from utils import send_async, display_name, mention_user, game_is_running
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +51,7 @@ def do_skip(bot, player, job_queue=None):
                         "been reduced to {time} seconds.\n"
                         "Next player: {name}", multi=game.translate)
                    .format(time=n,
-                           name=display_name(next_player.user))
+                           name=mention_user(next_player.user))
         )
         logger.info("{player} was skipped! "
                     .format(player=display_name(player.user)))
@@ -66,8 +66,8 @@ def do_skip(bot, player, job_queue=None):
                        text=__("{name1} ran out of time "
                             "and has been removed from the game!\n"
                             "Next player: {name2}", multi=game.translate)
-                       .format(name1=display_name(skipped_player.user),
-                               name2=display_name(next_player.user)))
+                       .format(name1=mention_user(skipped_player.user),
+                               name2=mention_user(next_player.user)))
             logger.info("{player} was skipped! "
                     .format(player=display_name(player.user)))
             if job_queue:
@@ -78,7 +78,7 @@ def do_skip(bot, player, job_queue=None):
                        text=__("{name} ran out of time "
                                "and has been removed from the game!\n"
                                "The game ended.", multi=game.translate)
-                       .format(name=display_name(skipped_player.user)))
+                       .format(name=mention_user(skipped_player.user)))
 
             gm.end_game(chat, skipped_player.user)
 
