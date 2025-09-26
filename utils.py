@@ -53,7 +53,7 @@ def mention_user(user):
     user_name = user.first_name
     if user.last_name:
         user_name += f" {user.last_name}"
-    return f"[{user_name}](tg://user?id={user.id})"
+    return f"<a href=tg://user?id={user.id}>{user_name}</a>"
 
 def display_color(color):
     """ Convert a color code to actual color name """
@@ -93,7 +93,7 @@ def send_async(bot, *args, **kwargs):
     if 'timeout' not in kwargs:
         kwargs['timeout'] = TIMEOUT
     if 'parse_mode' not in kwargs:
-        kwargs['parse_mode'] = ParseMode.MARKDOWN_V2
+        kwargs['parse_mode'] = ParseMode.HTML
     try:
         dispatcher.run_async(bot.sendMessage, *args, **kwargs)
     except Exception as e:
